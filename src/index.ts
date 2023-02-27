@@ -36,7 +36,15 @@ function flat(point, vs, start, end) {
   return inside;
 }
 
-function pointInPolygon(point, vs, start, end) {
+type IPoint = [number, number];
+type IPolygon = IPoint[] | number[];
+
+function pointInPolygon(
+  point: IPoint,
+  vs: IPolygon,
+  start: number,
+  end: number
+) {
   if (vs.length > 0 && Array.isArray(vs[0])) {
     return nested(point, vs, start, end);
   }
