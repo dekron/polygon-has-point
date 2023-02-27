@@ -1,0 +1,47 @@
+build_config/*
+src/assets/*
+
+# Не игнорируем нужные типы файлов
+# нужно для сервера сборок
+!**/*.js
+!**/*.ts
+!**/*.jsx
+!**/*.tsx
+
+
+# Всегда игнорируем файлы
+**/*.html
+**/*.md
+**/*.gitignore
+**/*.xml
+**/*.log
+**/*.ico
+**/*.less
+**/*.css
+**/*.json
+**/*.svg
+**/*.gif
+**/*.snap
+**/*.ttf
+**/*.woff
+**/*.woff2
+**/*.lock
+**/*.spec.ts
+**/*.spec.tsx
+**/*.spec.jsx
+**/*.spec.js
+**/*.test.jsx
+**/*.test.js
+**/*.test.ts
+**/*.test.tsx
+jest.config.*
+
+# Всегда игнорируем папки
+**/node_modules/**
+**/*snapshots*/**
+**/*mock*/**
+**/*config*/**
+**/*dist*/
+**/*coverage*/
+
+examples/
