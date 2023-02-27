@@ -1,7 +1,7 @@
 {
-  "name": "point-in-poligon",
+  "name": "point-in-polygon",
   "version": "1.0.0",
-  "description": "JavaScript library for check point in poligon",
+  "description": "JavaScript library for check point in polygon",
   "devDependencies": {
     "@babel/cli": "7.21.0",
     "@babel/core": "7.21.0",
