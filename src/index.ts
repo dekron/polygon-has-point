@@ -1,60 +1,77 @@
 export type IPoint = [number, number];
-export type IPolygonFlat = number[];
-export type IPolygonNested = IPoint[];
-export type IPolygon = IPolygonFlat | IPolygonNested;
+export type IPolygonNested = [IPoint[]];
 
-function nested(
-  point: IPoint,
-  vs: IPolygonNested,
-  start?: number,
-  end?: number
-) {
-  const x = point[0];
-  const y = point[1];
-  let inside = false;
-  if (start === undefined) start = 0;
-  if (end === undefined) end = vs.length;
-  const len = end - start;
-  for (let i = 0, j = len - 1; i < len; j = i++) {
-    const xi = vs[i + start][0];
-    const yi = vs[i + start][1];
-    const xj = vs[j + start][0];
-    const yj = vs[j + start][1];
-    const intersect =
-      yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
-    if (intersect) inside = !inside;
-  }
-  return inside;
-}
+function pointInPolygon(point: IPoint, polygon: IPolygonNested) {
+	let i = 0;
+	let ii = 0;
+	let k = 0;
+	let f = 0;
+	let u1 = 0;
+	let v1 = 0;
+	let u2 = 0;
+	let v2 = 0;
+	let currentP = null;
+	let nextP = null;
 
-function flat(point: IPoint, vs: IPolygonFlat, start?: number, end?: number) {
-  const x = point[0];
-  const y = point[1];
-  let inside = false;
-  if (start === undefined) start = 0;
-  if (end === undefined) end = vs.length;
-  const len = (end - start) / 2;
-  for (let i = 0, j = len - 1; i < len; j = i++) {
-    const xi = vs[start + i * 2];
-    const yi = vs[start + i * 2 + 1];
-    const xj = vs[start + j * 2];
-    const yj = vs[start + j * 2 + 1];
-    const intersect =
-      yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi;
-    if (intersect) inside = !inside;
-  }
-  return inside;
-}
+	const x = point[0];
+	const y = point[1];
 
-function pointInPolygon(
-  point: IPoint,
-  vs: IPolygon,
-  start?: number,
-  end?: number
-) {
-  if (vs.length > 0 && Array.isArray(vs[0])) {
-    return nested(point, <IPolygonNested>vs, start, end);
-  }
-  return flat(point, <IPolygonFlat>vs, start, end);
+	const numContours = polygon.length;
+	for (i; i < numContours; i++) {
+		ii = 0;
+		const contourLen = polygon[i].length - 1;
+		const contour = polygon[i];
+
+		currentP = contour[0];
+		if (currentP[0] !== contour[contourLen][0] && currentP[1] !== contour[contourLen][1]) {
+			throw new Error('First and last coordinates in a ring must be the same');
+		}
+
+		u1 = currentP[0] - x;
+		v1 = currentP[1] - y;
+
+		for (ii; ii < contourLen; ii++) {
+			nextP = contour[ii + 1];
+
+			v2 = nextP[1] - y;
+
+			if ((v1 < 0 && v2 < 0) || (v1 > 0 && v2 > 0)) {
+				currentP = nextP;
+				v1 = v2;
+				u1 = currentP[0] - x;
+				continue;
+			}
+
+			u2 = nextP[0] - point[0];
+
+			if (v2 > 0 && v1 <= 0) {
+				f = u1 * v2 - u2 * v1;
+				if (f > 0) k += 1;
+				else if (f === 0) return 0;
+			} else if (v1 > 0 && v2 <= 0) {
+				f = u1 * v2 - u2 * v1;
+				if (f < 0) k += 1;
+				else if (f === 0) return 0;
+			} else if (v2 === 0 && v1 < 0) {
+				f = u1 * v2 - u2 * v1;
+				if (f === 0) return 0;
+			} else if (v1 === 0 && v2 < 0) {
+				f = u1 * v2 - u2 * v1;
+				if (f === 0) return 0;
+			} else if (v1 === 0 && v2 === 0) {
+				if (u2 <= 0 && u1 >= 0) {
+					return 0;
+				}
+				if (u1 <= 0 && u2 >= 0) {
+					return 0;
+				}
+			}
+			currentP = nextP;
+			v1 = v2;
+			u1 = u2;
+		}
+	}
+
+	return k % 2 !== 0;
 }
-export { nested, flat, pointInPolygon };
+export { pointInPolygon };
