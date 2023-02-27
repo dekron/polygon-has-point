@@ -2,7 +2,7 @@
 
 ## Usage
 ```js
-const { pointInPolygon } = require('point-in-polygon');
+const { pointInPolygon } = require('polygon-has-point');
 
 const polygon = [
 [56.22259136217699, 58.01036084201374],
