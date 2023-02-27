@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "emitDeclarationOnly": true,
+    "pretty": true,
+    "declaration": true,
+    "esModuleInterop": false,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "isolatedModules": true,
+    "noImplicitAny": false,
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
+    "module": "commonjs",
+    "target": "es5",
+    "preserveSymlinks": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["dom", "es2017"]
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}
