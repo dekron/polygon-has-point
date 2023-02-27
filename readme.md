@@ -1,4 +1,4 @@
-# Point In Polygon
+# Polygon has point
 
 ## Usage
 ```js
