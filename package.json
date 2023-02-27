@@ -1,5 +1,5 @@
 {
-  "name": "@spate_tech/point-in-poligon",
+  "name": "point-in-poligon",
   "version": "1.0.0",
   "description": "JavaScript library for check point in poligon",
   "devDependencies": {
