@@ -1,6 +1,6 @@
 {
   "name": "polygon-has-point",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "JavaScript library for check point in polygon",
   "devDependencies": {
     "@babel/cli": "7.21.0",
